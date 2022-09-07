@@ -8,4 +8,5 @@ farm_scripts/*
 terraform.tfstate*
 .terraform*
 variables.tf
+docker-compose.yml
 
