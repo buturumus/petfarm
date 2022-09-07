@@ -1,0 +1,43 @@
+HISTFILE=~/.zsh-histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt appendhistory autocd extendedglob nomatch notify
+unsetopt beep
+#bindkey -e
+# End of lines configured by zsh-newuser-install
+
+# The following lines were added by compinstall
+#zstyle :compinstall filename '/home/sasha/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+autoload colors && colors
+zstyle ':completion:*' menu yes select
+
+#PROMPT="%~ %(#.%{$bg[red]%}.%{$fg[green]%})%n%{$reset_color%}@%m%(?.%{$fg[green]%}.%{$bg[red]%}) \\%%{$reset_color%} "
+PROMPT="%n@%m %~%# "
+#RPROMPT=" %T"
+
+setopt correctall
+SPROMPT="       $fg[red]%R →$reset_color $fg[green]%r?$reset_color (Yes, No, Abort, Edit) "
+
+PATH=$PATH:/usr/sbin:/sbin:/usr/local/sbin
+
+
+#functions
+md() { mkdir -p $*; cd "$1" }
+
+#aliases
+alias XX='exit'
+alias ..='cd .. ; ls --color=auto -al'
+alias ll='ls --color=auto -l'
+alias la='ls --color=auto -al'
+alias Ls='ls --color=auto -alp | grep \/'
+alias Cp='cp -Rv'
+alias from1251='iconv -f cp1251'
+alias to1251='iconv -t cp1251'
+
+bindkey -v
+

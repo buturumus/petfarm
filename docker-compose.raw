@@ -1,0 +1,21 @@
+# docker_compose.raw
+
+version: '3.8'
+
+services:
+  vpn_shell:
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    build: .
+    volumes:
+      - .:/base
+      - ./configs/etc_VPN_CMD:/etc/VPN_CMD/
+      - ./configs/root_azure:/root/.azure/
+    command: bash -c /base/compose.rc
+
+volumes:
+  etc_VPN_CMD:
+  root_azure:
+
