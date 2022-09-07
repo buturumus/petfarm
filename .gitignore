@@ -7,4 +7,5 @@ configs/*
 farm_scripts/*
 terraform.tfstate*
 .terraform*
+variables.tf
 
