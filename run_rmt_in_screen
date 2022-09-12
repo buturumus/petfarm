@@ -1,0 +1,22 @@
+#!/bin/bash
+# run_rmt_in_screen
+
+. /base/farm.creds
+
+RMT_BASE_DIR=/home/$RMT_USERNAME
+SCRIPT=$1
+if [ -z $SCRIPT ] ; then exit ; fi
+SCRIPT_NAME=$(basename $SCRIPT)
+
+PROV=do
+for LOC in sg in ; do
+  for VM_ID in 0 1 2 ; do
+    echo Copying to "$PROV""$LOC""$VM_ID"'...'
+    scp $SCRIPT $RMT_USERNAME@"$PROV""$LOC""$VM_ID": 
+    echo Running $SCRIPT_NAME in screen remotely'...'
+    echo '/bin/bash -c "screen -dmS '$SCRIPT_NAME $RMT_BASE_DIR/$SCRIPT_NAME'"'
+    ssh $RMT_USERNAME@"$PROV""$LOC""$VM_ID" \
+      '/bin/bash -c "screen -dmS '$SCRIPT_NAME $RMT_BASE_DIR/$SCRIPT_NAME'"'
+  done
+done
+

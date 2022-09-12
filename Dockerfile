@@ -1,4 +1,5 @@
-FROM debian:bullseye
+#FROM debian:bullseye
+FROM python:3.9
 WORKDIR /base
 COPY vpn.deb /base/
 RUN \
@@ -27,5 +28,5 @@ RUN \
   echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
   echo 'resolvconf resolvconf/linkify-resolvconf boolean false' | debconf-set-selections && \
   apt-get update && \
-  apt-get install -y resolvconf && dpkg -i /base/vpn.deb
-
+  apt-get install -y resolvconf && dpkg -i /base/vpn.deb && \
+  ssh-keygen -f /root/.ssh/id_rsa -q -N ""

@@ -2,6 +2,8 @@ Session.vim
 [._]*.sw[a-p]
 dump.*
 *.bak
+*.creds
+*_creds.py
 vpn.*
 configs/*
 farm_scripts/*
@@ -9,4 +11,6 @@ terraform.tfstate*
 .terraform*
 variables.tf
 docker-compose.yml
+*docean.txt
+__pycache__*
 

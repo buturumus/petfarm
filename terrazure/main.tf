@@ -62,7 +62,7 @@ resource "azurerm_subnet" "farm_subnet" {
 locals {
   farm_groups = azurerm_resource_group.farm_group 
   vm_idxx   = [ 0, 1, 2 ]
-  group_vms = distinct(flatten([
+  groups_vms = distinct(flatten([
     for farm_group in local.farm_groups : [ 
       for vm_idx in local.vm_idxx : { 
         farm_group = farm_group
@@ -73,7 +73,7 @@ locals {
 }
 
 resource "azurerm_public_ip" "farm_pub_ip" {
-  for_each = { for i in local.group_vms: "${i.farm_group.name}.${i.vm_idx}" => i }
+  for_each = { for i in local.groups_vms: "${i.farm_group.name}.${i.vm_idx}" => i }
   name                = "${each.value.farm_group.name}PubIp${each.value.vm_idx}"
   resource_group_name = each.value.farm_group.name 
   location            = each.value.farm_group.location
@@ -83,7 +83,7 @@ resource "azurerm_public_ip" "farm_pub_ip" {
 
 resource "azurerm_network_interface" "farm_nic" {
   for_each = { 
-    for i in local.group_vms: "${i.farm_group.name}.${i.vm_idx}" => i 
+    for i in local.groups_vms: "${i.farm_group.name}.${i.vm_idx}" => i 
   }
   name                = "${each.value.farm_group.name}Nic${each.value.vm_idx}"
   resource_group_name = each.value.farm_group.name 
@@ -100,7 +100,7 @@ resource "azurerm_network_interface" "farm_nic" {
 
 resource "azurerm_network_security_group" "farm_nic_sec" {
   for_each = { 
-    for i in local.group_vms: "${i.farm_group.name}.${i.vm_idx}" => i 
+    for i in local.groups_vms: "${i.farm_group.name}.${i.vm_idx}" => i 
   }
   name                = "${each.value.farm_group.name}NicSec${each.value.vm_idx}"
   resource_group_name = each.value.farm_group.name 
@@ -121,7 +121,7 @@ resource "azurerm_network_security_group" "farm_nic_sec" {
 # bind security group to vm's interface
 resource "azurerm_network_interface_security_group_association" "farm_nic_sec_bind" {
   for_each = { 
-    for i in local.group_vms: "${i.farm_group.name}.${i.vm_idx}" => i 
+    for i in local.groups_vms: "${i.farm_group.name}.${i.vm_idx}" => i 
   }
   network_interface_id = azurerm_network_interface.farm_nic[
     "${each.value.farm_group.name}.${each.value.vm_idx}"].id
@@ -132,7 +132,7 @@ resource "azurerm_network_interface_security_group_association" "farm_nic_sec_bi
 # vm itself
 resource "azurerm_linux_virtual_machine" "farm_vm" {
   for_each = { 
-    for i in local.group_vms: "${i.farm_group.name}.${i.vm_idx}" => i 
+    for i in local.groups_vms: "${i.farm_group.name}.${i.vm_idx}" => i 
   }
   name                  = "${each.value.farm_group.name}${each.value.vm_idx}"
   resource_group_name = each.value.farm_group.name 
@@ -162,7 +162,7 @@ resource "azurerm_linux_virtual_machine" "farm_vm" {
 
 resource "azurerm_virtual_machine_extension" "farm_init_script" {
   for_each = { 
-    for i in local.group_vms: "${i.farm_group.name}.${i.vm_idx}" => i 
+    for i in local.groups_vms: "${i.farm_group.name}.${i.vm_idx}" => i 
   }
   name = "${each.value.farm_group.name}${each.value.vm_idx}InitScript"
   virtual_machine_id   = azurerm_linux_virtual_machine.farm_vm[

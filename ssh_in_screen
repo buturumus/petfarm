@@ -1,0 +1,20 @@
+#!/bin/bash
+# ssh_in_screen
+
+. /base/farm.creds
+. /base/vpn.cmds
+
+SRV=$1
+if [ -z $SRV ] ; then exit ; fi
+# if such connection exists in some screen session
+if [ ! -z "$(screen -ls | grep $SRV)" ] ; then
+  # reconnect to the session
+  screen -r $SRV
+else
+  # create new ssh session in local screen
+  screen -dmS $SRV /bin/bash -c \
+    "$VPN_STATUS_CMD && echo 'Enter to continue' && read A && \
+    exec ssh $RMT_USERNAME@$SRV"
+  screen -r $SRV
+fi
+
