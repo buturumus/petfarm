@@ -1,5 +1,5 @@
 Container with vpn, interactive shell and terraform. 
 Can be used to create and manage small farm of virtual machines in a cloud, currently there are some settings for Azure and Digital Ocean.
 For simplycity there is common username and password for all VMs in the farm.
-Exact name of used vpn solution, credentials and so on are not important.
+Exact name of used vpn solution, credentials and so on are not important/excluded.
 

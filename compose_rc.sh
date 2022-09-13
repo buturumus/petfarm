@@ -1,9 +1,9 @@
 #!/bin/bash
-# compose.rc
+# compose_rc.sh
 
 # import VPN_NAME, VPN_PW, RMT_USERNAME, RMT_PW
 . $(dirname "$0")/vpn.cmds
-. $(dirname "$0")/vpn.creds 
+. $(dirname "$0")/vpn_creds.py
 
 if [ ! -f /base/configs/.zshrc ] ; then
   cp /base/zshrc_min /base/configs/.zshrc
@@ -19,8 +19,8 @@ $VPN_LOGIN_CMD
 $VPN_CONN_CMD
 $VPN_STATUS_CMD
 echo 'Enter to continue' && read A
-/base/upd_hosts.py
-/base/upd_silent_ids
+python3 /base/upd_hosts.py
+python3 /base/upd_silent_ids.py
 # start inter.shell 
 /usr/bin/zsh
 

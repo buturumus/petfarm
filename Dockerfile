@@ -29,4 +29,5 @@ RUN \
   echo 'resolvconf resolvconf/linkify-resolvconf boolean false' | debconf-set-selections && \
   apt-get update && \
   apt-get install -y resolvconf && dpkg -i /base/vpn.deb && \
-  ssh-keygen -f /root/.ssh/id_rsa -q -N ""
+  ssh-keygen -f /root/.ssh/id_rsa -q -N "" \
+

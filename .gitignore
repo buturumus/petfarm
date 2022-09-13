@@ -2,9 +2,8 @@ Session.vim
 [._]*.sw[a-p]
 dump.*
 *.bak
-*.creds
-*_creds.py
-vpn.*
+*creds.py
+vpn*
 configs/*
 farm_scripts/*
 terraform.tfstate*

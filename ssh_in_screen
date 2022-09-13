@@ -1,8 +1,8 @@
 #!/bin/bash
 # ssh_in_screen
 
-. /base/farm.creds
-. /base/vpn.cmds
+. /base/farm_creds.py
+. /base/vpn_cmds.py
 
 SRV=$1
 if [ -z $SRV ] ; then exit ; fi

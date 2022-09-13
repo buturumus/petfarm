@@ -13,7 +13,7 @@ services:
       - .:/base
       - ./configs/etc_windscribe:/etc/windscribe/
       - ./configs/root_azure:/root/.azure/
-    command: bash -c /base/compose.rc
+    command: bash -c /base/compose_rc.sh
 
 volumes:
   etc_windscribe:
