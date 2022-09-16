@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 # upd_silent_ids.py
 
-import re, os
+import re
+import os
 import farm_creds
 
 RMT_USERNAME = farm_creds.RMT_USERNAME
@@ -10,7 +11,7 @@ HOSTS_FILE = '/etc/hosts'
 HOSTS_EXCL_MASK = '# farm'
 
 
-# current farm addrs from hosts file 
+# current farm addrs from hosts file
 with open(HOSTS_FILE, 'r') as hosts_file:
     hosts_lines = hosts_file.read().splitlines()
     farm_addrs = []
@@ -23,23 +24,25 @@ with open(HOSTS_FILE, 'r') as hosts_file:
 # rmt.actions for every addr.
 for srv in farm_addrs:
     ssh_exec_data = [
-        {   'rmt_cmd': (
+        {
+            'rmt_cmd': (
                 'sshpass -p ' + RMT_PW
-                + ' ssh-copy-id -o StrictHostKeyChecking=no ' 
+                + ' ssh-copy-id -o StrictHostKeyChecking=no '
                 + RMT_USERNAME + '@' + srv
             ),
             'comment': 'updating ssh keys',
         },
-        {   'rmt_cmd': (
+        {
+            'rmt_cmd': (
                 'ssh ' + RMT_USERNAME + '@' + srv
                 + ' "echo ' + RMT_PW + ' | sudo -S bash -c '
                 + '\\"if ['
-                +   ' `grep escape /etc/screenrc &> /dev/null ; echo $?` = 1 '
+                + ' `grep escape /etc/screenrc &> /dev/null ; echo $?` = 1 '
                 + '] ; then '
-                +   'echo escape\ ^Bb >> /etc/screenrc ; '
-                +   'echo screenrc-modified ; '
+                + ' echo escape ^Bb >> /etc/screenrc ; '    # todo: escape?
+                + ' echo -e \\nscreenrc-modified ; '
                 + 'else '
-                +   'echo screenrc-is-already-modified '
+                + ' echo -e \\nscreenrc-is-already-modified '
                 + '; fi\\""'
             ),
             'comment': 'changing rmt screen hotkey',

@@ -14,7 +14,7 @@ RESOLV_TEXT=$(cat /etc/resolv.conf | tr \\n / | sed -r 's/\//\\n'/g) \
   && echo -e "nameserver 8.8.8.8\n"$RESOLV_TEXT > /etc/resolv.conf
 cp /base/update-resolv.sh $VPN_ETC_DIR
 $VPN_SYSINIT_CMD
-grep VPN /base/vpn.creds | tr = \   # show creds
+grep VPN /base/vpn_creds.py | tr = \   # show creds
 $VPN_LOGIN_CMD
 $VPN_CONN_CMD
 $VPN_STATUS_CMD

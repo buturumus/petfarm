@@ -75,7 +75,7 @@ resource "digitalocean_droplet" "do_vm" {
     inline = [
       "export PATH=$PATH:/usr/bin",
       "useradd -s /bin/bash -d /home/${var.admin_name} -m ${var.admin_name} && echo ${var.admin_pw}\\\\n${var.admin_pw} | passwd ${var.admin_name} && gpasswd -a ${var.admin_name} sudo", 
-      "A=$(cat /etc/ssh/sshd_config | sed -r 's/_/UNDERSCORE/g' | tr \\n _ | sed -r 's/PasswordAuthentication no/PasswordAuthentication yes/' | sed -r 's/_/\\n/g' | sed -r 's/UNDERSCORE/_/g') && echo $A > /etc/ssh/sshd_config && systemctl restart ssh.service", 
+      "A=$(cp /etc/ssh/sshd_config /etc/ssh/sshd_config.00 && cat /etc/ssh/sshd_config | sed -r 's/_/UNDERSCORE/g' | tr \\n _ | sed -r 's/PasswordAuthentication no/PasswordAuthentication yes/' | sed -r 's/_/\\n/g' | sed -r 's/UNDERSCORE/_/g') && echo -e $A > /etc/ssh/sshd_config && systemctl restart ssh.service", 
       var.install_spec_soft,
     ]
   }

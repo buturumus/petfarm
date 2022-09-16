@@ -1,5 +1,9 @@
 # main.tf
 
+
+################### 1st apply ################### 
+
+
 terraform {
   required_providers {
     azurerm = {
@@ -26,6 +30,10 @@ locals {
     "azbr" = {
       reg_suffix  = "br"
       location    = "Brazil South"
+    }
+    "azkr" = {
+      reg_suffix  = "kr"
+      location    = "Korea Central"
     }
   }
 }

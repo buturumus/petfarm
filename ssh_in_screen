@@ -2,7 +2,7 @@
 # ssh_in_screen
 
 . /base/farm_creds.py
-. /base/vpn_cmds.py
+. /base/vpn.cmds
 
 SRV=$1
 if [ -z $SRV ] ; then exit ; fi
