@@ -9,6 +9,8 @@ if [ ! -f /base/configs/.zshrc ] ; then
   cp /base/zshrc_min /base/configs/.zshrc
 fi
 ln -s /base/configs/.zshrc $(echo $HOME)/
+# python lib path fix
+export PYTHONPATH=/usr/local/lib/python3.9/site-packages $PYTHONPATH
 # wrong docker dns fix
 RESOLV_TEXT=$(cat /etc/resolv.conf | tr \\n / | sed -r 's/\//\\n'/g) \
   && echo -e "nameserver 8.8.8.8\n"$RESOLV_TEXT > /etc/resolv.conf

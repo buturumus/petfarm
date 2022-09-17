@@ -27,7 +27,7 @@ for prov in PROVS.split():
                     RMT_USERNAME + '@' + prov + loc + vm_id,
                 )
             except:
-                print('Error processing ' + prov + loc + vm_id)
+                print('Error connectiong to ' + prov + loc + vm_id + '\n')
                 continue
             if Path(all_args).is_file():
                 print(f'Copying script to {prov}{loc}{vm_id}...')
@@ -37,5 +37,9 @@ for prov in PROVS.split():
             else:
                 rmt_cmd = all_args
                 print(f'Running "{all_args}" on {prov}{loc}{vm_id}...')
-            res = conn.run(rmt_cmd, hide='both', warn=True,)
+            try:
+                res = conn.run(rmt_cmd, hide='both', warn=True,)
+            except:
+                print('Error on remote cmd with ' + prov + loc + vm_id + '\n')
+                continue
             print(res)
