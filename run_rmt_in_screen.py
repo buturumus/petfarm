@@ -10,9 +10,9 @@ from farm_creds import RMT_USERNAME
 sys.tracebacklimit = 0
 RMT_BASEDIR = '/home/' + RMT_USERNAME
 
-PROVS = 'do'
-LOCS = 'sg'
-VM_IDS = '0'
+PROVS = 'az'
+LOCS = 'br in kr'
+VM_IDS = '0 1 2'
 
 if len(sys.argv) < 2:
     print('no rmt script/command')

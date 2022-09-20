@@ -22,7 +22,7 @@ $VPN_CONN_CMD
 $VPN_STATUS_CMD
 echo 'Enter to continue' && read A
 python3 /base/upd_hosts.py
-python3 /base/upd_silent_ids.py
+# python3 /base/upd_silent_ids.py
 # start inter.shell 
 /usr/bin/zsh
 
