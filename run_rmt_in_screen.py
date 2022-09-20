@@ -23,11 +23,9 @@ for prov in PROVS.split():
     for loc in LOCS.split():
         for vm_id in VM_IDS.split():
             try:
-                conn = fabric.Connection(
-                    RMT_USERNAME + '@' + prov + loc + vm_id,
-                )
+                conn = fabric.Connection(f'{RMT_USERNAME}@{prov}{loc}{vm_id}')
             except:
-                print('Error connectiong to ' + prov + loc + vm_id + '\n')
+                print(f'Error connectiong to {prov}{loc}{vm_id}\n')
                 continue
             if Path(all_args).is_file():
                 print(f'Copying script to {prov}{loc}{vm_id}...')
@@ -40,6 +38,7 @@ for prov in PROVS.split():
             try:
                 res = conn.run(rmt_cmd, hide='both', warn=True,)
             except:
-                print('Error on remote cmd with ' + prov + loc + vm_id + '\n')
+                print(f'Error on remote cmd with {prov}{loc}{vm_id}\n')
                 continue
             print(res)
+
