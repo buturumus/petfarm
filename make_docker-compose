@@ -1,7 +1,0 @@
-#!/bin/bash
-# make_docker-compose
-
-. $(dirname "$0")/vpn.cmds
-sed -r 's/VPN_CMD/$VPN_CMD/g' $(dirname "$0")/docker-compose.raw \
-  > $(dirname "$0")/docker-compose.yml
-

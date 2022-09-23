@@ -1,15 +1,21 @@
 #!/usr/bin/python3
-# run_rmt_in_screen.py
+# run_remotely.py arg
+# arg is a command to be executed on the remote host(s)
+# or a script to be executed in a Screen session
 
 import os
 import sys
 from pathlib import Path
+import re
 import fabric
 from farm_creds import RMT_USERNAME
 
 sys.tracebacklimit = 0
 RMT_BASEDIR = '/home/' + RMT_USERNAME
 
+# data to set rmt hosts
+# PROVS = 'do'
+# LOCS = 'sg in'
 PROVS = 'az'
 LOCS = 'br in kr'
 VM_IDS = '0 1 2'
@@ -28,9 +34,14 @@ for prov in PROVS.split():
                 print(f'Error connectiong to {prov}{loc}{vm_id}\n')
                 continue
             if Path(all_args).is_file():
-                print(f'Copying script to {prov}{loc}{vm_id}...')
+                print(f'Copying script {all_args} to {prov}{loc}{vm_id}...')
                 conn.put(all_args)
-                rmt_cmd = RMT_BASEDIR + '/' + os.path.basename(all_args)
+                # if arg is a script run it in a Screen session not just run
+                rmt_cmd = (
+                    'screen -dmS '
+                    + re.findall(r'[a-zA-Z0-9\-\.]+$', all_args)[-1]
+                    + ' ' + RMT_BASEDIR + '/' + os.path.basename(all_args)
+                )
                 print('running...')
             else:
                 rmt_cmd = all_args
