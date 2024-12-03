@@ -26,8 +26,8 @@ class TerrAzure(Prov):
             'terraform -chdir=' + self.dirpath + ' show'
         ).read()  # .splitlines()
         tf_hosts = re.findall(
-            '(computer_name[^"]+"[^"]+")'
-            + '|(public_ip_address[^e][^"]+"[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+")',
+            r'(computer_name[^"]+"[^"]+")'
+            + r'|(public_ip_address[^e][^"]+"[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+")',
             tf_output
         )
         hosts_lines = []
@@ -60,8 +60,8 @@ class TerraDocean(Prov):
             'terraform -chdir=' + self.dirpath + ' show'
         ).read()  # .splitlines()
         tf_hosts = re.findall(
-            '(ipv4_address[^_][^\"]+\"[0-9\.]+\")'
-            + '|(name[^\"]+\"[0-9a-z\.]+\")',
+            r'(ipv4_address[^_][^\"]+\"[0-9\.]+\")'
+            + r'|(name[^\"]+\"[0-9a-z\.]+\")',
             tf_output
         )
         tf_hosts.pop(0)

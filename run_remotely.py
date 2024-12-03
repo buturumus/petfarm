@@ -14,11 +14,12 @@ sys.tracebacklimit = 0
 RMT_BASEDIR = '/home/' + RMT_USERNAME
 
 # data to set rmt hosts
-# PROVS = 'do'
-# LOCS = 'sg in'
-PROVS = 'az'
-LOCS = 'br in kr'
+PROVS = 'do'
+LOCS = 'sg in'
 VM_IDS = '0 1 2'
+# PROVS = 'az'
+# LOCS = 'br in kr'
+# VM_IDS = '0 1 2'
 
 if len(sys.argv) < 2:
     print('no rmt script/command')
